@@ -513,6 +513,28 @@
 							"subViews": [
 								{
 									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGFcntK60WPzCo=",
+									"_parent": {
+										"$ref": "AAAAAAGFch5PmVG3VTc="
+									},
+									"model": {
+										"$ref": "AAAAAAGFch5PmVG0VRU="
+									},
+									"font": "Arial;13;0",
+									"left": 275,
+									"top": 150,
+									"width": 14.82177734375,
+									"height": 13,
+									"alpha": 0.5235987755982988,
+									"distance": 30,
+									"hostEdge": {
+										"$ref": "AAAAAAGFch5PmVG3VTc="
+									},
+									"edgePosition": 2,
+									"text": "+1"
+								},
+								{
+									"_type": "EdgeLabelView",
 									"_id": "AAAAAAGFch5PmlG49Oo=",
 									"_parent": {
 										"$ref": "AAAAAAGFch5PmVG3VTc="
@@ -594,28 +616,6 @@
 										"$ref": "AAAAAAGFch5PmVG3VTc="
 									},
 									"edgePosition": 2
-								},
-								{
-									"_type": "EdgeLabelView",
-									"_id": "AAAAAAGFch5PmlG976w=",
-									"_parent": {
-										"$ref": "AAAAAAGFch5PmVG3VTc="
-									},
-									"model": {
-										"$ref": "AAAAAAGFch5PmVG0VRU="
-									},
-									"font": "Arial;13;0",
-									"left": 275,
-									"top": 177,
-									"width": 7.22998046875,
-									"height": 13,
-									"alpha": -0.5235987755982988,
-									"distance": 25,
-									"hostEdge": {
-										"$ref": "AAAAAAGFch5PmVG3VTc="
-									},
-									"edgePosition": 2,
-									"text": "1"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -726,11 +726,11 @@
 								"$ref": "AAAAAAGFch5PmlG6eN0="
 							},
 							"showEndOrder": "hide",
+							"tailRoleNameLabel": {
+								"$ref": "AAAAAAGFcntK60WPzCo="
+							},
 							"tailPropertyLabel": {
 								"$ref": "AAAAAAGFch5PmlG8xLw="
-							},
-							"tailMultiplicityLabel": {
-								"$ref": "AAAAAAGFch5PmlG976w="
 							},
 							"headRoleNameLabel": {
 								"$ref": "AAAAAAGFch5PmlG+UgU="
@@ -935,9 +935,9 @@
 										"$ref": "AAAAAAGFch9acFNbpIM="
 									},
 									"font": "Arial;13;0",
-									"left": 416,
+									"left": 415,
 									"top": 177,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.745419859660899,
 									"distance": 17.69180601295413,
