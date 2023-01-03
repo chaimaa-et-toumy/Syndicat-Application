@@ -1,5 +1,6 @@
 const supertest = require('supertest')
 const app = require('../server')
+const { forgetPassword } = require('../Utils/sendEmail')
 
 // test unit for register
 describe("------------------test for register function--------------------", () => {
@@ -37,7 +38,6 @@ describe("------------------test for register function--------------------", () 
 })
 
 // test unit for login
-
 describe("------------------test for login function--------------------", () => {
 
     describe("when email and password is missing", () => {
@@ -77,7 +77,7 @@ describe("------------------test for login function--------------------", () => 
         test('should reponde with a 400 status code', async () => {
             const response = await supertest(app).post("/api/auth/login").send({
                 email: "chaimaetoumy5@gmail.com",
-                password: "gfhgfhghgg"
+                password: "test"
             })
             expect(response.statusCode).toBe(400)
         })
@@ -97,3 +97,35 @@ describe("------------------test for login function--------------------", () => 
     })
 
 })
+
+// test unit for forgetPassword
+
+describe("---------------test for forgot password ---------------", () => {
+    describe("when email is missing", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/auth/forgotpassword").send({
+                email: ""
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    describe("when user is not found", () => {
+        test("sould reponde with a 404 status code", async () => {
+            const response = await supertest(app).post("/api/auth/forgotpassword").send({
+                email: "youcoders@gmail.com"
+            })
+            expect(response.statusCode).toBe(404)
+        })
+    })
+    describe("when email is correct", () => {
+        test("sould reponde with a 200 status code", async () => {
+            const response = await supertest(app).post("/api/auth/forgotpassword").send({
+                email: "chaimaetoumy5@gmail.com"
+            })
+            expect(response.statusCode).toBe(200)
+        })
+    })
+
+})
+
+

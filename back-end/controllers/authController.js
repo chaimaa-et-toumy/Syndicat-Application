@@ -102,6 +102,35 @@ const login = async (req, res) => {
     }
 }
 
+// method : post
+// url : api/auth/forgot_password
+// acces : public
+
+const forget_password = async (req, res) => {
+    const { email } = req.body
+    if (!email) {
+        res.status(400).send("email is required")
+    }
+    try {
+        const syndique_ = await syndique.findOne({ email })
+        if (syndique_) {
+            await forgetPassword(req, syndique_, res)
+            res.status(200).json({
+                _id: syndique_.id,
+                email: syndique_.email,
+                etoken: jwt.sign({ _id: syndique_.id }, process.env.JWT_SECRET, { expiresIn: '10m' }),
+                msg: res.err
+            })
+        }
+        else {
+            res.status(404).send("user not found")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 const verify_email = async (req, res) => {
     try {
@@ -124,6 +153,7 @@ const verify_email = async (req, res) => {
 module.exports = {
     register,
     login,
-    verify_email
+    verify_email,
+    forget_password
 }
 
