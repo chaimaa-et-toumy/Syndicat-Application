@@ -60,7 +60,70 @@ const register = async (req, res) => {
     }
 }
 
+// method : post
+// url : api/auth/login
+// acces : public
+
+const login = async (req, res) => {
+    const { email, password } = req.body
+    if (!email || !password) {
+        res.status(400).send("Please add All fields")
+    }
+    try {
+        const syndique_ = await syndique.findOne({ email })
+        if (syndique_) {
+            const isMatch = await bycrpt.compare(password, syndique_.password)
+            if (isMatch && (syndique_.isVerifed === true)) {
+                let token = generateToken(syndique_.id, syndique_.email, syndique_.fullname)
+                ls.set('token', token)
+                res.status(200).json({
+                    _id: syndique_.id,
+                    fullname: syndique_.fullname,
+                    email: syndique_.email,
+                    password: syndique_.password,
+                    token: token,
+                    isVerifed: syndique_.isVerifed,
+                    msg: res.message
+                })
+            }
+            else if (isMatch && (syndique_.isVerifed === false)) {
+                res.status(401).send("first verify your email address to login")
+            }
+            else if (!isMatch) {
+                res.status(400).send("password is incorrect")
+            }
+        }
+        else {
+            res.status(404).send("user not found")
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+
+const verify_email = async (req, res) => {
+    try {
+        const token = req.params.token
+        const syndique_ = await syndique.findOne({ eToken: token })
+        if (syndique_) {
+            syndique_.isVerifed = true
+            await syndique_.save()
+            console.log("email is verified")
+            // res.redirect('http://localhost:3000/Login')
+        }
+        else {
+            console.log("email is not verified")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
-    register
+    register,
+    login,
+    verify_email
 }
 

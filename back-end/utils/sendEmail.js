@@ -15,7 +15,7 @@ const sendEmail = (req, user, res) => {
         from: ' "Verify your email" chaimaetoumy5@gmail.com',
         to: user.email,
         subject: 'Verify your email',
-        html: `<h2> ${user.name}! thanks for registering on our site</h2>
+        html: `<h2> ${user.fullname}! thanks for registering on our site</h2>
                 <h4> please verify your mail to continue ... </h4>
                 <a href="http://${req.headers.host}/api/auth/verify_email/${user.eToken}" >Verify your Email</a>`
     };
