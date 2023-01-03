@@ -18,7 +18,7 @@ const register = async (req, res) => {
     const { fullname, email, password } = req.body
 
     if (!fullname || !email || !password) {
-        res.status(400).send("Please add All fields")
+        res.status(404).send("Please add All fields")
     }
 
     const syndiqueExist = await syndique.findOne({ email })
@@ -46,6 +46,7 @@ const register = async (req, res) => {
         if (syndique_) {
             res.status(201).json({
                 _id: syndique_.id,
+                fullname: syndique_.fullname,
                 email: syndique_.email,
                 password: syndique_.password,
                 token: generateToken(syndique_.id),

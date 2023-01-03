@@ -3,7 +3,6 @@ const express = require('express')
 const connectDb = require('./Config/DbConfig')
 const router = require('./Routes/authRoute')
 
-
 connectDb()
 
 const app = express()
