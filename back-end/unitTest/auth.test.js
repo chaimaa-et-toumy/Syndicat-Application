@@ -1,6 +1,5 @@
 const supertest = require('supertest')
 const app = require('../server')
-const { forgetPassword } = require('../Utils/sendEmail')
 
 // test unit for register
 describe("------------------test for register function--------------------", () => {
@@ -65,7 +64,7 @@ describe("------------------test for login function--------------------", () => 
 
         test('should reponde with a 401 status code (not verify)', async () => {
             const response = await supertest(app).post("/api/auth/login").send({
-                email: "chaimaa@gmail.com",
+                email: "admin@gmail.com",
                 password: "chaimaa"
             })
             expect(response.statusCode).toBe(401)
@@ -77,19 +76,18 @@ describe("------------------test for login function--------------------", () => 
         test('should reponde with a 400 status code', async () => {
             const response = await supertest(app).post("/api/auth/login").send({
                 email: "chaimaetoumy5@gmail.com",
-                password: "test"
+                password: "code"
             })
             expect(response.statusCode).toBe(400)
         })
 
     })
-
     describe("user not found", () => {
 
         test('should reponde with a 404 status code', async () => {
             const response = await supertest(app).post("/api/auth/login").send({
-                email: "hgdhfhgds@gmail.com",
-                password: "youdsdhgcode"
+                email: "syndique@gmail.com",
+                password: "syndique"
             })
             expect(response.statusCode).toBe(404)
         })
@@ -99,7 +97,6 @@ describe("------------------test for login function--------------------", () => 
 })
 
 // test unit for forgetPassword
-
 describe("---------------test for forgot password ---------------", () => {
     describe("when email is missing", () => {
         test("should reponde with a 400 status code", async () => {
@@ -128,4 +125,23 @@ describe("---------------test for forgot password ---------------", () => {
 
 })
 
+//test unit for reset password
+describe("-------------------test for reset password -------------", () => {
+    describe("when token is missing", () => {
+        test("should reponde with a 404 status code", async () => {
+            const response = await supertest(app).post("/api/auth/resetpassword").send({
+                password: "admin"
+            })
+            expect(response.statusCode).toBe(404)
+        })
+    })
+    describe("when password is missing", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/auth/resetpassword/test").send({
+                password: ""
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+})
 

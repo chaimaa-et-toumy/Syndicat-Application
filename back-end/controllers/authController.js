@@ -103,7 +103,7 @@ const login = async (req, res) => {
 }
 
 // method : post
-// url : api/auth/forgot_password
+// url : api/auth/forgotpassword
 // acces : public
 
 const forget_password = async (req, res) => {
@@ -124,6 +124,53 @@ const forget_password = async (req, res) => {
         }
         else {
             res.status(404).send("user not found")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// method : post
+// url : api/auth/resetpassword
+// acces : public
+
+const resetpassword = async (req, res) => {
+    const password = req.body.password
+    let token = req.params.token
+    const salt = await bycrpt.genSalt(10)
+
+    if (!password) {
+        res.status(400).send("password is required")
+    }
+    else {
+        const syndique_ = await syndique.findOne({ eToken: token })
+        if (syndique_) {
+            if (syndique_.isReset === true) {
+                syndique_.password = await bycrpt.hash(password, salt)
+                res.status(200).send("password is reset")
+                await syndique_.save()
+            }
+            else {
+                res.status(400).send("password is not reset")
+            }
+        }
+        else {
+            res.status(404).send("user not found")
+        }
+    }
+
+}
+
+const verify_email_rest = async (req, res) => {
+    try {
+        let token = req.params.token
+        const syndique_ = await syndique.findOne({ etoken: token })
+        if (syndique_) {
+            syndique_.isReset = true,
+                await syndique_.save()
+        }
+        else {
+            res.send("password is not verified")
         }
     } catch (error) {
         console.log(error)
@@ -154,6 +201,8 @@ module.exports = {
     register,
     login,
     verify_email,
-    forget_password
+    forget_password,
+    resetpassword,
+    verify_email_rest
 }
 
