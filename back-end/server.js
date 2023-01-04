@@ -3,6 +3,7 @@ const express = require('express')
 const connectDb = require('./Config/DbConfig')
 const router = require('./routes/authRoute')
 const routerClient = require('./routes/clientRoute')
+const routerAppartement = require('./routes/appartementRoute')
 
 connectDb()
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/auth', router)
 app.use('/api/client', routerClient)
+app.use('/api/appartement', routerAppartement)
 
 
 const port = process.env.port || 5050

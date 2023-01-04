@@ -6,7 +6,7 @@ const clientShema = mongoose.Schema({
     },
     cin: {
         type: String,
-        required: true
+        unique: true
     },
     tel: {
         type: Number

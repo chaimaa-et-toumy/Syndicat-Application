@@ -2,11 +2,18 @@ const mongoose = require('mongoose')
 
 const appartementSchema = mongoose.Schema({
     adresse: {
-        type: String
+        type: String,
+        unique: true
     },
     isRented: {
         type: Boolean,
         default: false
+    },
+    prix: {
+        type: Number
+    },
+    surface: {
+        type: String
     },
     client: {
         type: mongoose.Schema.Types.ObjectId,
