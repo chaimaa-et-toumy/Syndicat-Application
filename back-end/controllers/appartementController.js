@@ -5,33 +5,6 @@ const clientModel = require('../models/clientModel')
 //url : api/appartement/addAppartement
 //acces : private
 
-// const addAppartement = async (req, res) => {
-//     const { adresse, isRented, prix, surface } = req.body
-//     if (!adresse || !isRented, !prix || !surface) {
-//         res.status(400).send("all field is required")
-//     }
-//     else {
-//         try {
-//             const appartementExist = await appartement.findOne({ adresse })
-//             if (appartementExist) {
-//                 res.status(400).send("appartement already exist")
-//             }
-//             else {
-//                 const newAppartement = new appartement({
-//                     adresse,
-//                     isRented,
-//                     prix,
-//                     surface,
-//                 })
-//                 await newAppartement.save()
-//                 res.status(200).send("appartement created successfully")
-//             }
-//         } catch (error) {
-//             console.log(error)
-//         }
-//     }
-// }
-
 const addAppartement = async (req, res) => {
     const { body } = req
     if (!body.adresse || !body.isRented, !body.prix || !body.surface) {
@@ -98,16 +71,34 @@ const deleteAppartement = async (req, res) => {
 //url : api/appatement/getAllAppartement
 //acces : private
 
+const getAllAppartement = async (req, res) => {
+    try {
+        const appartement_ = await appartement.find().populate('client')
+        res.status(200).send(appartement_)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+//methode : get
+//url : api/appatement/getOneAppartement/:id
+//acces : private
 
-
-
-
+const getOneAppartement = async (req, res) => {
+    const { id } = req.params
+    try {
+        const appartement_ = await appartement.findOne({ _id: id }).populate('client')
+        res.status(200).send(appartement_)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 module.exports = {
     addAppartement,
     updateAppartement,
     deleteAppartement,
-    getAllAppartement
+    getAllAppartement,
+    getOneAppartement
 }
