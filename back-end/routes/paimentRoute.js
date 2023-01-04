@@ -1,8 +1,9 @@
 const express = require('express')
 const routerPaiment = express.Router()
 
-const { addPaiment } = require('../controllers/paimentController')
+const { addPaiment, updatePaiment } = require('../controllers/paimentController')
 routerPaiment.post('/addPaiment', addPaiment)
+routerPaiment.post('/updatePaiment/:id', updatePaiment)
 
 
 

@@ -36,7 +36,6 @@ const updateAppartement = async (req, res) => {
     const { body } = req
     const { id } = req.params
     try {
-
         if (body.client) {
             const client_ = await clientModel.findOne({ _id: body.client })
             if (!client_) {
