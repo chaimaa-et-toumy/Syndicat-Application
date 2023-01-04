@@ -161,6 +161,16 @@ const resetpassword = async (req, res) => {
 
 }
 
+//method : post
+//url : api/auth/logout
+//acces : private
+
+const logout = async (req, res) => {
+    ls.remove('token')
+    res.status(200).send("logout successfully")
+}
+
+
 const verify_email_rest = async (req, res) => {
     try {
         let token = req.params.token
@@ -176,8 +186,6 @@ const verify_email_rest = async (req, res) => {
         console.log(error)
     }
 }
-
-
 
 const verify_email = async (req, res) => {
     try {
@@ -203,6 +211,7 @@ module.exports = {
     verify_email,
     forget_password,
     resetpassword,
-    verify_email_rest
+    verify_email_rest,
+    logout
 }
 
