@@ -61,6 +61,17 @@ const updateAppartement = async (req, res) => {
 
 }
 
+//methode : post
+//url : api/appartement/deleteAppartement/:id
+//acces : private
+
+const deleteAppartement = async (req, res) => {
+    const { id } = req.params
+    await appartement.findByIdAndRemove({ _id: id })
+    res.status(200).send("delete successufully")
+}
+
+
 
 
 
@@ -68,5 +79,6 @@ const updateAppartement = async (req, res) => {
 
 module.exports = {
     addAppartement,
-    updateAppartement
+    updateAppartement,
+    deleteAppartement
 }
