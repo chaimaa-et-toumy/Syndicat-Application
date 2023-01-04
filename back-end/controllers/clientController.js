@@ -34,7 +34,6 @@ const addClient = async (req, res) => {
 const updateClient = async (req, res) => {
     const { fullname, cin, tel } = req.body
     const { id } = req.params
-    console.log(id)
     if (!fullname || !cin || !tel) {
         res.status(400).send("all field is required")
     }

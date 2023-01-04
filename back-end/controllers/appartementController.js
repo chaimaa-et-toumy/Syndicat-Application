@@ -6,17 +6,12 @@ const clientModel = require('../models/clientModel')
 //acces : private
 
 const addAppartement = async (req, res) => {
-    const { adresse, isRented, prix, surface, client } = req.body
-    if (!adresse || !isRented, !prix || !surface || !client) {
+    const { adresse, isRented, prix, surface } = req.body
+    if (!adresse || !isRented, !prix || !surface) {
         res.status(400).send("all field is required")
     }
     else {
         try {
-            const client_ = await clientModel.findOne({ _id: client })
-            if (!client_) {
-                res.status(400).send("client not found")
-            }
-
             const appartementExist = await appartement.findOne({ adresse })
             if (appartementExist) {
                 res.status(400).send("appartement already exist")
@@ -27,7 +22,6 @@ const addAppartement = async (req, res) => {
                     isRented,
                     prix,
                     surface,
-                    client: client_._id
                 })
                 await newAppartement.save()
                 res.status(200).send("appartement created successfully")
@@ -38,18 +32,41 @@ const addAppartement = async (req, res) => {
     }
 }
 
-
-
-
-
 //methode : post
 //url : api/appartement/updateAppartement/:id
 //acces : private
+
+const updateAppartement = async (req, res) => {
+    const { adresse, isRented, prix, surface } = req.body
+    const { id } = req.params
+    try {
+
+        const appartementExist = await appartement.findOne({ adresse })
+        if (appartementExist) {
+            res.status(400).send("appartement already exist")
+        }
+        else {
+            await appartement.updateOne({ _id: id }, {
+                adresse,
+                isRented,
+                prix,
+                surface
+            })
+            res.status(200).send(await appartement.findOne({ _id: id }))
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 
 
 
 
 
 module.exports = {
-    addAppartement
+    addAppartement,
+    updateAppartement
 }
