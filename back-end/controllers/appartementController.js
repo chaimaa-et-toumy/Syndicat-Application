@@ -5,24 +5,46 @@ const clientModel = require('../models/clientModel')
 //url : api/appartement/addAppartement
 //acces : private
 
+// const addAppartement = async (req, res) => {
+//     const { adresse, isRented, prix, surface } = req.body
+//     if (!adresse || !isRented, !prix || !surface) {
+//         res.status(400).send("all field is required")
+//     }
+//     else {
+//         try {
+//             const appartementExist = await appartement.findOne({ adresse })
+//             if (appartementExist) {
+//                 res.status(400).send("appartement already exist")
+//             }
+//             else {
+//                 const newAppartement = new appartement({
+//                     adresse,
+//                     isRented,
+//                     prix,
+//                     surface,
+//                 })
+//                 await newAppartement.save()
+//                 res.status(200).send("appartement created successfully")
+//             }
+//         } catch (error) {
+//             console.log(error)
+//         }
+//     }
+// }
+
 const addAppartement = async (req, res) => {
-    const { adresse, isRented, prix, surface } = req.body
-    if (!adresse || !isRented, !prix || !surface) {
+    const { body } = req
+    if (!body.adresse || !body.isRented, !body.prix || !body.surface) {
         res.status(400).send("all field is required")
     }
     else {
         try {
-            const appartementExist = await appartement.findOne({ adresse })
+            const appartementExist = await appartement.findOne({ adresse: body.adresse })
             if (appartementExist) {
                 res.status(400).send("appartement already exist")
             }
             else {
-                const newAppartement = new appartement({
-                    adresse,
-                    isRented,
-                    prix,
-                    surface,
-                })
+                const newAppartement = new appartement({ ...body })
                 await newAppartement.save()
                 res.status(200).send("appartement created successfully")
             }
@@ -32,29 +54,30 @@ const addAppartement = async (req, res) => {
     }
 }
 
+
 //methode : post
 //url : api/appartement/updateAppartement/:id
 //acces : private
 
 const updateAppartement = async (req, res) => {
-    const { adresse, isRented, prix, surface } = req.body
+    const { body } = req
     const { id } = req.params
     try {
 
-        const appartementExist = await appartement.findOne({ adresse })
+        if (body.client) {
+            const client_ = await clientModel.findOne({ _id: body.client })
+            if (!client_) {
+                res.status(400).send("client not found")
+            }
+        }
+        const appartementExist = await appartement.findOne({ adresse: body.adresse })
         if (appartementExist) {
             res.status(400).send("appartement already exist")
         }
         else {
-            await appartement.updateOne({ _id: id }, {
-                adresse,
-                isRented,
-                prix,
-                surface
-            })
+            await appartement.updateOne({ _id: id }, { ...body })
             res.status(200).send(await appartement.findOne({ _id: id }))
         }
-
     } catch (error) {
         console.log(error)
     }
@@ -71,6 +94,11 @@ const deleteAppartement = async (req, res) => {
     res.status(200).send("delete successufully")
 }
 
+//methode : get
+//url : api/appatement/getAllAppartement
+//acces : private
+
+
 
 
 
@@ -80,5 +108,6 @@ const deleteAppartement = async (req, res) => {
 module.exports = {
     addAppartement,
     updateAppartement,
-    deleteAppartement
+    deleteAppartement,
+    getAllAppartement
 }
