@@ -67,8 +67,18 @@ const updatePaiment = async (req, res) => {
     }
 }
 
+//methode : get
+//url : api/paiment/deleteAppartement/:id
+//acces : private
+const deletePaiment = async (req, res) => {
+    const { id } = req.params
+    const SearchPaiment = await paiment.findByIdAndRemove({ _id: id })
+    res.status(200).send("delete successufully")
+}
+
 
 module.exports = {
     addPaiment,
-    updatePaiment
+    updatePaiment,
+    deletePaiment
 }
