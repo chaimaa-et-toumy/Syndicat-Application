@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const paimentSchema = mongoose.Schema({
     prix: {
-        type: String,
+        type: Number,
     },
     date_paiment: {
         type: Date,
