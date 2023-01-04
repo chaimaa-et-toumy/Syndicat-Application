@@ -6,29 +6,47 @@ const clientModel = require('../models/clientModel')
 //acces : private
 
 const addAppartement = async (req, res) => {
-    const { adresse, isRented, prix, surface } = req.body
-    if (!adresse || !isRented, !prix || !surface) {
+    const { adresse, isRented, prix, surface, client } = req.body
+    if (!adresse || !isRented, !prix || !surface || !client) {
         res.status(400).send("all field is required")
     }
     else {
         try {
+            const client_ = await clientModel.findOne({ _id: client })
+            if (!client_) {
+                res.status(400).send("client not found")
+            }
+
             const appartementExist = await appartement.findOne({ adresse })
             if (appartementExist) {
                 res.status(400).send("appartement already exist")
             }
-            const newAppartement = new appartement({
-                adresse,
-                isRented,
-                prix,
-                surface
-            })
-            await newAppartement.save()
-            res.status(200).send("appartement created successfully")
+            else {
+                const newAppartement = new appartement({
+                    adresse,
+                    isRented,
+                    prix,
+                    surface,
+                    client: client_._id
+                })
+                await newAppartement.save()
+                res.status(200).send("appartement created successfully")
+            }
         } catch (error) {
             console.log(error)
         }
     }
 }
+
+
+
+
+
+//methode : post
+//url : api/appartement/updateAppartement/:id
+//acces : private
+
+
 
 
 
