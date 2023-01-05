@@ -1,5 +1,6 @@
 const paiment = require('../models/paimentModel')
 const Appartement = require('../models/appartementModel')
+const Client = require('../models/clientModel')
 
 
 //methode : post
@@ -76,9 +77,25 @@ const deletePaiment = async (req, res) => {
     res.status(200).send("delete successufully")
 }
 
+//methode : post
+//url : api/paiment/getAllPaiment
+//acces : private
+
+const getAllPaiment = async (req, res) => {
+
+    try {
+
+        const allPaiment = await paiment.find().populate({ path: 'appartement', populate: { path: 'client' } })
+        res.status(200).send(allPaiment)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 module.exports = {
     addPaiment,
     updatePaiment,
-    deletePaiment
+    deletePaiment,
+    getAllPaiment
 }
