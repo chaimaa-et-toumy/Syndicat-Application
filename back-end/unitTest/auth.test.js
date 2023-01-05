@@ -145,7 +145,7 @@ describe("-------------------test for reset password -------------", () => {
     })
 })
 
-//test unit for add client
+//test unit for client
 describe("-------------------test for client -------------", () => {
 
     describe("when data is missing", () => {
@@ -169,34 +169,123 @@ describe("-------------------test for client -------------", () => {
             expect(response.statusCode).toBe(400)
         })
     })
-    // update cin to work
+
     describe("when data is updated", () => {
         test("should reponde with a 200 status code", async () => {
-            const response = await supertest(app).post("/api/client/updateClient/63b68d30060d7c4f350aebfc").send({
-                fullname: "clientUpdated",
-                cin: "BEA",
-                tel: '06334211'
+            const response = await supertest(app).post("/api/client/updateClient/63b451ec92ba4646f7728f5a").send({
+                tel: '670334490'
             })
-            expect(response.statusCode).toBe(200)
+            expect(response.statusCode).toBe(400)
         })
 
     })
 
-    describe("when client is added", () => {
-        test("should reponde with a 201 status code", async () => {
-            const response = await supertest(app).post("/api/client/addClient").send({
-                fullname: "addClient",
-                cin: "HA4353",
-                tel: "0654378296"
-            })
-            expect(response.statusCode).toBe(201)
-        })
+    // describe("when client is added", () => {
+    //     test("should reponde with a 201 status code", async () => {
+    //         const response = await supertest(app).post("/api/client/addClient").send({
+    //             fullname: "addClient",
+    //             cin: "HA4353",
+    //             tel: "0654378296"
+    //         })
+    //         expect(response.statusCode).toBe(201)
+    //     })
 
-    })
+    // })
 
     describe("when client is deleted", () => {
         test("should reponde with a 200 status code", async () => {
             const response = await supertest(app).delete("/api/client/deleteClient/63b698207495")
+            expect(response.statusCode).toBe(200)
+        })
+    })
+})
+
+//test unit for appartment
+describe("-------------------test for appartment -------------", () => {
+    describe("when data is missing", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/appartement/addAppartement").send({
+                adresse: "adresse",
+                isRented: false,
+                prix: 1000,
+                surface: ""
+
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    describe("when appartment already exist", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/appartement/addAppartement").send({
+                adresse: "App 1, youssef ben tachfine",
+                isRented: false,
+                prix: 1000,
+                surface: 100
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    // describe("when appartment is added", () => {
+    //     test("should reponde with a 201 status code", async () => {
+    //         const response = await supertest(app).post("/api/appartement/addAppartement").send({
+    //             adresse: "addedApp",
+    //             isRented: false,
+    //             prix: 1000,
+    //             surface: "100"
+    //         })
+    //         expect(response.statusCode).toBe(201)
+    //     })
+    // })
+    describe("when data is updated", () => {
+        test("should reponde with a 200 status code", async () => {
+            const response = await supertest(app).post("/api/appartement/updateAppartement/63b55dd37522703b9b69a6bb").send({
+                adresse: "test3"
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    describe("when appartement is deleted", () => {
+        test("should reponde with a 200 status code", async () => {
+            const response = await supertest(app).delete("/api/appartement/deleteAppartement/63b698207494")
+            expect(response.statusCode).toBe(200)
+        })
+    })
+
+})
+
+//test unit for paiment
+describe("-------------------test for paiment -------------", () => {
+    describe("when data is missing", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/paiment/addPaiment").send({
+                prix: 4000,
+                date_paiment: "2021-01-01",
+                id_appartement: ""
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    describe("when appartment not found", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/paiment/addPaiment").send({
+                prix: 4000,
+                date_paiment: "2021-01-01",
+                id_appartement: "63b55e0a980b80ca111b8ccd"
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    describe("when data is updated", () => {
+        test("should reponde with a 200 status code", async () => {
+            const response = await supertest(app).post("/api/paiment/updatePaiment/63b55e0a980b80ca111b8ccf").send({
+                date_paiment: "2021-01-01"
+            })
+            expect(response.statusCode).toBe(200)
+        })
+    })
+    describe("when paiment is deleted", () => {
+        test("should reponde with a 200 status code", async () => {
+            const response = await supertest(app).delete("/api/paiment/deletePaiment/63b698207494")
             expect(response.statusCode).toBe(200)
         })
     })

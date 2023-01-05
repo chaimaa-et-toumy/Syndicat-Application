@@ -19,7 +19,7 @@ const addAppartement = async (req, res) => {
             else {
                 const newAppartement = new appartement({ ...body })
                 await newAppartement.save()
-                res.status(200).send("appartement created successfully")
+                res.status(201).send("appartement created successfully")
             }
         } catch (error) {
             console.log(error)

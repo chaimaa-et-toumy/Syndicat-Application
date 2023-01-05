@@ -10,14 +10,14 @@ const Client = require('../models/clientModel')
 const addPaiment = async (req, res) => {
     const { prix, date_paiment, appartement } = req.body
     if (!prix || !date_paiment || !appartement) {
-        res.status(200).send("all filed is required")
+        res.status(400).send("all filed is required")
     }
     const Searchappartement = await Appartement.findOne({ _id: appartement })
     if (!Searchappartement) {
-        res.status(200).send("appartement not found")
+        res.status(400).send("appartement not found")
     }
     if (Searchappartement.isRented === false) {
-        res.status(200).send("appartement not rented")
+        res.status(400).send("appartement not rented")
     }
     const newPaiment = new paiment({
         prix,
