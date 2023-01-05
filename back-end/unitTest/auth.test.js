@@ -145,3 +145,60 @@ describe("-------------------test for reset password -------------", () => {
     })
 })
 
+//test unit for add client
+describe("-------------------test for client -------------", () => {
+
+    describe("when data is missing", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/client/addClient").send({
+                fullname: "client",
+                cin: "BAAAAA",
+                tel: ""
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+
+    describe("when client already exist", () => {
+        test("should reponde with a 400 status code", async () => {
+            const response = await supertest(app).post("/api/client/addClient").send({
+                fullname: "client",
+                cin: "BA17245",
+                tel: "12345678"
+            })
+            expect(response.statusCode).toBe(400)
+        })
+    })
+    // update cin to work
+    describe("when data is updated", () => {
+        test("should reponde with a 200 status code", async () => {
+            const response = await supertest(app).post("/api/client/updateClient/63b68d30060d7c4f350aebfc").send({
+                fullname: "clientUpdated",
+                cin: "BEA",
+                tel: '06334211'
+            })
+            expect(response.statusCode).toBe(200)
+        })
+
+    })
+
+    describe("when client is added", () => {
+        test("should reponde with a 201 status code", async () => {
+            const response = await supertest(app).post("/api/client/addClient").send({
+                fullname: "addClient",
+                cin: "HA4353",
+                tel: "0654378296"
+            })
+            expect(response.statusCode).toBe(201)
+        })
+
+    })
+
+    describe("when client is deleted", () => {
+        test("should reponde with a 200 status code", async () => {
+            const response = await supertest(app).delete("/api/client/deleteClient/63b698207495")
+            expect(response.statusCode).toBe(200)
+        })
+    })
+})
+

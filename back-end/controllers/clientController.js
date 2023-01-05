@@ -7,7 +7,7 @@ const client = require('../models/clientModel');
 const addClient = async (req, res) => {
     const { fullname, cin, tel } = req.body
     if (!fullname || !cin || !tel) {
-        res.status(200).send("All filed is required")
+        res.status(400).send("All filed is required")
     }
     try {
         const clientExist = await client.findOne({ cin })
@@ -20,7 +20,7 @@ const addClient = async (req, res) => {
             tel
         })
         await newClient.save()
-        res.status(200).send("created successfully")
+        res.status(201).send("created successfully")
     }
     catch (error) {
         console.log(error)
