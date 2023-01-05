@@ -161,7 +161,7 @@ const resetpassword = async (req, res) => {
 
 }
 
-//method : post
+//method : get
 //url : api/auth/logout
 //acces : private
 
@@ -170,7 +170,7 @@ const logout = async (req, res) => {
     res.status(200).send("logout successfully")
 }
 
-
+//function to reset password
 const verify_email_rest = async (req, res) => {
     try {
         let token = req.params.token
@@ -186,7 +186,7 @@ const verify_email_rest = async (req, res) => {
         console.log(error)
     }
 }
-
+//function to verify email
 const verify_email = async (req, res) => {
     try {
         const token = req.params.token
@@ -195,7 +195,6 @@ const verify_email = async (req, res) => {
             syndique_.isVerifed = true
             await syndique_.save()
             console.log("email is verified")
-            // res.redirect('http://localhost:3000/Login')
         }
         else {
             console.log("email is not verified")

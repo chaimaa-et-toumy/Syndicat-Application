@@ -68,7 +68,7 @@ const updatePaiment = async (req, res) => {
     }
 }
 
-//methode : get
+//methode : delete
 //url : api/paiment/deleteAppartement/:id
 //acces : private
 const deletePaiment = async (req, res) => {
@@ -77,19 +77,32 @@ const deletePaiment = async (req, res) => {
     res.status(200).send("delete successufully")
 }
 
-//methode : post
+//methode : get
 //url : api/paiment/getAllPaiment
 //acces : private
 
 const getAllPaiment = async (req, res) => {
 
     try {
-
         const allPaiment = await paiment.find().populate({ path: 'appartement', populate: { path: 'client' } })
         res.status(200).send(allPaiment)
-
     } catch (error) {
         console.log(error)
+    }
+}
+
+//methode : get
+//url : api/paiment/getOnePaiment/:id
+//acces : private
+
+const getOnePaiment = async (req, res) => {
+    const { id } = req.params
+    try {
+        const SearchOnePaiment = await paiment.find({ _id: id }).populate({ path: 'appartement', populate: { path: 'client' } })
+        res.status(200).send(SearchOnePaiment)
+    }
+    catch (err) {
+        console.log(err);
     }
 }
 
@@ -97,5 +110,6 @@ module.exports = {
     addPaiment,
     updatePaiment,
     deletePaiment,
-    getAllPaiment
+    getAllPaiment,
+    getOnePaiment
 }

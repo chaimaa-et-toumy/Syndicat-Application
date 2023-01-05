@@ -56,7 +56,7 @@ const updateAppartement = async (req, res) => {
 
 }
 
-//methode : post
+//methode : delete
 //url : api/appartement/deleteAppartement/:id
 //acces : private
 
