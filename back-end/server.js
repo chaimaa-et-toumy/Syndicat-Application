@@ -5,6 +5,9 @@ const router = require('./routes/authRoute')
 const routerClient = require('./routes/clientRoute')
 const routerAppartement = require('./routes/appartementRoute')
 const routerPaiment = require('./routes/paimentRoute')
+const errRoute = require('./middleware/RouterError')
+const { requiredLogin } = require('./middleware/authMiddleware')
+
 
 connectDb()
 
@@ -13,9 +16,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/auth', router)
-app.use('/api/client', routerClient)
-app.use('/api/appartement', routerAppartement)
-app.use('/api/paiment', routerPaiment)
+app.use('/api/client', [requiredLogin, routerClient])
+app.use('/api/appartement', [requiredLogin, routerAppartement])
+app.use('/api/paiment', [requiredLogin, routerPaiment])
+app.use(errRoute)
 
 
 const port = process.env.port || 5050
