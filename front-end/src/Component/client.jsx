@@ -7,11 +7,8 @@ export default function Client(){
   const [client, setClient] = useState([]);
   const [refersh, setRefersh] = useState(false)
   const [currentClient, setCurrentClient] = useState(null)
-  const [display, setDisplay] = useState({
-    fullname: "",
-    cin: "",
-    tel: "",
-  });
+  const [display, setDisplay] = useState({fullname: "", cin: "", tel: ""});
+  const [errors, setErrors] = useState({...display})
 
   useEffect(() => {
     axios.get("http://localhost:5050/api/client/getAllClient")
@@ -23,28 +20,27 @@ export default function Client(){
     .catch((err)=>{
       console.log(err)
     }) 
-    // getOneClient()
   }, [refersh])
 
+   // for update
   function getOneClient(id){
     axios.get(`http://localhost:5050/api/client/getOneClient/${id}`)
     .then((response)=>{
       setDisplay(response.data)
       setCurrentClient(id)
-      console.log(response.data)
+      // console.log(response.data)
     })
     .catch((err)=>{
       console.log(err.response.data)
     }) 
   }
 
-  // for update
+
   function handleChange(e){
     setDisplay({...display, [e.target.name]: e.target.value})
   }
   function handleSubmit(e) {
     e.preventDefault()
-
     axios.post(`http://localhost:5050/api/client/updateClient/${currentClient}`, display)
     .then((response)=>{
       console.log(response.data)
@@ -56,6 +52,43 @@ export default function Client(){
     }
     )
   }
+
+
+  const handleChangeAdd = (e) => {
+    setDisplay({...display, [e.target.name]: e.target.value})
+    setErrors({...errors, [e.target.name]: ""})
+  }
+  const handleSubmitAdd = async(e) => {
+    e.preventDefault()
+    //validation input
+    const regixTel = /^((\+)212|0)[6-7]([0-9]{8})$/;
+    if(!display.fullname){
+      setErrors({...errors, fullname: "fullname is required"})
+      return
+    }
+    if(!display.cin){
+      setErrors({...errors, cin: "cin is required"})
+    }
+    if(!display.tel){
+      setErrors({...errors, tel: "tel is required"})
+    }
+    if(!regixTel.test(display.tel)){
+      setErrors({...errors, tel: "tel is not valid"})
+    }
+    if(display.fullname && display.cin && display.tel){
+      await axios.post('http://localhost:5050/api/client/addClient',display)
+      .then((response)=>{
+        console.log(response.data.msg)   
+        setShowModal(false)  
+        setRefersh(!refersh)
+      })
+      .catch((err)=>{
+        console.log(err)
+        setErrors({...errors, cin: err.response.data})
+      })  
+    }  
+  }
+
 return(
   <> 
   <SideBar />
@@ -100,7 +133,6 @@ return(
                 <td className="px-6 py-4">
                   <div className="flex justify-end gap-4">
                     <button type="button"  onClick={() =>{setShowModal2(true); getOneClient(client_._id)}}>
-                      {/* <a x-data="{ tooltip: 'Edite' }" href="" > */}
                       <button>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                           stroke="currentColor" className="h-6 w-6" x-tooltip="tooltip">
@@ -148,41 +180,53 @@ return(
                 </div>
                 <div className="relative p-6 flex-auto">
                   <div className="my-4 text-slate-500 text-lg leading-relaxed">                   
-                    <form>
+                    <form onSubmit={handleSubmitAdd}>
                       <div className="relative z-0 w-full mb-6 group">
-                        <input type="text" name="fullname" id="floating_email" 
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" 
+                        name="fullname"
+                        value={display.fullname} 
+                        onChange = {handleChangeAdd}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full name</label>
+                        <div className="text-red-600 text-xs">{errors.fullname}</div>
                       </div>
                       <div className="grid md:grid-cols-2 md:gap-6">
                         <div className="relative z-0 w-full mb-6 group">
-                          <input type="tel"  name="tel" id="floating_phone" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                          <input type="tel"  
+                          name="tel"
+                          value={display.tel} 
+                          onChange = {handleChangeAdd} 
+                          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                           <label htmlFor="floating_phone" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
+                          <div className="text-red-600 text-xs">{errors.tel}</div>
                         </div>
                         <div className="relative z-0 w-full mb-6 group">
-                          <input type="text" name="cin" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                          <input type="text" 
+                          name="cin" 
+                          value={display.cin} 
+                          onChange = {handleChangeAdd} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                           <label htmlFor="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">CIN</label>
+                          <div className="text-red-600 text-xs">{errors.cin}</div>
                         </div>
                       </div>
+                        <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                          <button
+                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setShowModal(false)}>
+                            Close
+                          </button>
+                          <button
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            type="submit"
+                          >
+                              Save Changes
+                          </button>
+                        </div>  
                     </form>
                   </div>
                 </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Save Changes
-                  </button>
-                </div>
+             
               </div>
             </div>
           </div>
