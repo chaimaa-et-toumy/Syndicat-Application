@@ -41,7 +41,7 @@ const updateClient = async (req, res) => {
         try {
 
             const clientExist = await client.findOne({ cin })
-            if (clientExist) {
+            if (clientExist && clientExist._id != id) {
                 res.status(400).send("client already exist")
             }
 
