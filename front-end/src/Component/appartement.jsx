@@ -21,6 +21,18 @@ export default function Appartement(){
         setOpen(!isOpen);
     };
 
+    // delete Appartement
+    function deleteAppartement(id) {
+        axios.delete(`http://localhost:5050/api/appartement/deleteAppartement/${id}`)
+        .then((res)=>{
+            console.log(res.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+   
+
     return(
         <>
         <SideBar />
@@ -112,7 +124,7 @@ export default function Appartement(){
                                     </svg>
                                   </button>
                                 </button>
-                                <button type="button">
+                                <button type="button" onClick={()=>deleteAppartement(appartement._id)}>
                                   <a x-data="{ tooltip: 'Delete' }" href="">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                       stroke="currentColor" className="h-6 w-6" x-tooltip="tooltip">
