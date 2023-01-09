@@ -91,11 +91,28 @@ const getOneClient = async (req, res) => {
     res.status(200).send(client_)
 }
 
+//methode : get
+//url : api/client/countClient
+//acces : private
+
+const countClient = async (req, res) => {
+    try {
+        
+        const clients = await client.countDocuments()
+        res.status(200).send(clients.toString())
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 module.exports = {
     addClient,
     updateClient,
     deleteClient,
     getAllClient,
-    getOneClient
+    getOneClient,
+    countClient
 }

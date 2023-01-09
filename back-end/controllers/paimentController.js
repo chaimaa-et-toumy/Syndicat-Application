@@ -106,10 +106,25 @@ const getOnePaiment = async (req, res) => {
     }
 }
 
+//methode : get
+//url : api/paiment/countPaiment
+//acces : private
+
+const countPaiment = async (req, res) => {
+    try {
+        const countPaiment = await paiment.countDocuments()
+        res.status(200).send(countPaiment.toString())
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     addPaiment,
     updatePaiment,
     deletePaiment,
     getAllPaiment,
-    getOnePaiment
+    getOnePaiment,
+    countPaiment
 }

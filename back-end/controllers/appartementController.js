@@ -93,11 +93,36 @@ const getOneAppartement = async (req, res) => {
     }
 }
 
+//methode : get
+//url : api/appatement/countAppartementRented
+//acces : private
+const countAppartementRented = async (req, res) => {
+    try {
+        const appartement_ = await appartement.find({ isRented: true }).countDocuments()
+        res.status(200).send(appartement_.toString())
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//methode : get
+//url : api/appatement/countAppartementNotRented
+//acces : private
+const countAppartementNotRented = async (req, res) => {
+    try {
+        const appartement_ = await appartement.find({ isRented: false }).countDocuments()
+        res.status(200).send(appartement_.toString())
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 module.exports = {
     addAppartement,
     updateAppartement,
     deleteAppartement,
     getAllAppartement,
-    getOneAppartement
+    getOneAppartement,
+    countAppartementRented,
+    countAppartementNotRented
 }

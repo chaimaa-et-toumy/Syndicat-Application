@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/auth', router)
 app.use('/api/client', routerClient)
-app.use('/api/appartement', [requiredLogin, routerAppartement])
+app.use('/api/appartement', routerAppartement)
 app.use('/api/paiment', [requiredLogin, routerPaiment])
 app.use(errRoute)
 

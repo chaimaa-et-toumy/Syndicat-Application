@@ -27,11 +27,13 @@ return(
       <span className="tooltip">Client</span>
     </li>
     <li>
-      <a href="/#">
+    <Link to="/appartement">
+      <a href="">
         <i className='bx bx-home'></i>
         <span className="links_name">Appartement</span>
       </a>
       <span className="tooltip">Appartement</span>
+    </Link>
     </li>
      <li>
       <a href="/#">
