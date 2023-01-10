@@ -1,4 +1,5 @@
 import React from 'react'
+import Input from './part/Input'
 
 function Resetpassword() {
 return (
