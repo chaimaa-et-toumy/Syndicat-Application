@@ -49,7 +49,8 @@ return (
                     <form className="space-y-4 md:space-y-6" action="#" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your
-                                email</label>
+                                email
+                            </label>
                             <Input 
                                 type="email"
                                 name="email"
