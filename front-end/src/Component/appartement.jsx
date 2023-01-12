@@ -3,7 +3,13 @@ import axios from 'axios'
 import SideBar from "./part/sideBar";
 export default function Appartement(){
 
+    const [showModal2, setShowModal2] = useState(false);
     const [Appartement, setAppartement] = useState([])
+    const [displayApp, setDisplayApp] = useState({})
+    const [currentClient, setCurrentClient] = useState(null)
+    const [refersh, setRefersh] = useState(false)
+
+
 
     useEffect(()=>{
         axios.get('http://localhost:5050/api/appartement/getAllAppartement')
@@ -14,7 +20,7 @@ export default function Appartement(){
         .catch((err)=>{
             console.log(err)
         })
-    },[])
+    },[refersh])
  
     const [isOpen, setOpen] = useState(false);
     const handleDropDown = () => {
@@ -31,8 +37,40 @@ export default function Appartement(){
             console.log(err)
         })
     }
-   
 
+    function getOneAppartement(id){
+        axios.get(`http://localhost:5050/api/appartement/getOneAppartement/${id}`)	
+        .then((res)=>{
+            setDisplayApp(res.data)
+            setCurrentClient(id)
+            console.log(res.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
+    const handleChange = (e)=>{
+        setDisplayApp({...displayApp, [e.target.name]: e.target.value})
+    }
+
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        axios.post(`http://localhost:5050/api/appartement/updateAppartement/${currentClient}`, displayApp)
+        .then((res)=>{
+            console.log(res.data)
+            setShowModal2(false)
+            setRefersh(!refersh)
+
+            
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
+
+   
     return(
         <>
         <SideBar />
@@ -98,15 +136,15 @@ export default function Appartement(){
                                         </button>
                                         <div  id="dropdown" className={`w-44 bg-white shadow
                                                 ${isOpen ? "block" : "hidden"}`}>
-                                                <ul class="py-1 text-sm text-white-700 dark:text-white-200" aria-labelledby="dropdownDefaultButton">
+                                                <ul className="py-1 text-sm text-white-700 dark:text-white-200" aria-labelledby="dropdownDefaultButton">
                                                     <li>
-                                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Full name : {appartement.client.fullname}</a>
+                                                        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Full name : {appartement.client.fullname}</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">cin : {appartement.client.cin}</a>
+                                                        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">cin : {appartement.client.cin}</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">tel : {appartement.client.tel}</a>
+                                                        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">tel : {appartement.client.tel}</a>
                                                     </li>
                                                 </ul>
                                         </div>
@@ -115,7 +153,7 @@ export default function Appartement(){
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex justify-end gap-4">
-                                <button type="button">
+                                <button type="button" onClick={()=> {setShowModal2(true); getOneAppartement(appartement._id)}}>
                                   <button>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                       stroke="currentColor" className="h-6 w-6" x-tooltip="tooltip">
@@ -144,6 +182,163 @@ export default function Appartement(){
           </div>
 
 
+
+ {/* Model update */}
+ <div>
+      {showModal2 ? (
+      <>
+        <div
+          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div
+              className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <h5 className="text-center text-2xl font-semibold ">
+                  Update Apartement
+                </h5>
+                <button
+                  className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  onClick={()=> setShowModal2(false)}>
+                  <span
+                    className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div className="relative p-6 flex-auto">
+                <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                <form  onSubmit={handleSubmit}>
+                  <div className="relative z-0 w-full mb-6 group">
+                    <input type="text" id="floating_email" className="
+                                bg-transparent border-0 border-b-2 border-gray-300 
+                                block py-2.5 px-0 w-full text-sm text-gray-900
+                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                                appearance-none 
+                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                      name="adresse" 
+                      onChange={handleChange}
+                      value={displayApp.adresse} />  
+                    <label htmlFor="floating_email"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Adresse
+                    </label>
+                  </div>
+                  <div className="grid md:grid-cols-2 md:gap-6">
+                    <div className="relative z-0 w-full mb-6 group">
+                      <input type="text" id="floating_phone" className="
+                                bg-transparent border-0 border-b-2 border-gray-300 
+                                block py-2.5 px-0 w-full text-sm text-gray-900
+                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                                appearance-none 
+                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                         name="prix" 
+                         onChange={handleChange}
+                         value={displayApp.prix} />
+                      <label htmlFor="floating_phone"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        prix
+                        </label>
+                    </div>
+                    <div className="relative z-0 w-full mb-6 group">
+                      <input type="text" id="floating_company" className="
+                                bg-transparent border-0 border-b-2 border-gray-300 
+                                block py-2.5 px-0 w-full text-sm text-gray-900
+                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                                appearance-none 
+                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                         name="surface" 
+                         onChange={handleChange}
+                         value={displayApp.surface} />
+                      <label htmlFor="floating_company"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Surface
+                        </label>
+                      <div className="text-red-600 text-xs"></div>
+
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2 md:gap-6">
+                    <div className="relative z-0 w-full mb-6 group">
+                      <input type="text" id="floating_phone" className="
+                                bg-transparent border-0 border-b-2 border-gray-300 
+                                block py-2.5 px-0 w-full text-sm text-gray-900
+                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                                appearance-none 
+                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                         name="isRented" 
+                         onChange={handleChange}
+                         value={displayApp.isRented}/>
+                      <label htmlFor="floating_phone"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        isRented
+                        </label>
+                    </div>
+                   
+                        <div className="relative z-0 w-full mb-6 group">
+                           
+                            {
+                                displayApp.client && (
+                                    <>
+                                    <select id="client" name="client" className="mt-3 text-black border border-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:border-blue-500">
+                                    <option value="name">{displayApp.client.fullname}</option>
+
+                                </select>
+                                    <label htmlFor="floating_company"
+                                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                    client
+                                    </label>
+                                    </>
+                                    )
+                            }
+                                    { !displayApp.client && (
+                                        <>
+                                        <select id="client" name="client" className="mt-3 text-black border border-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:border-blue-500">
+                                        <option >null</option>
+    
+                                    </select>
+                                        <label htmlFor="floating_company"
+                                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                        client
+                                        </label>
+                                        </>
+                                        )
+
+
+                            }
+
+                                
+                            <div className="text-red-600 text-xs"></div>  
+                        </div>
+                   
+                  
+                    </div>
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button" onClick={()=> setShowModal2(false)}>
+                      Close
+                    </button>
+                    <button
+                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      type="submit">
+                      update
+                    </button>
+                  </div>
+                </form>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      </>
+      ) : null}
+
+
+      <div>
+
+      </div>
+    </div>
         
 
 
