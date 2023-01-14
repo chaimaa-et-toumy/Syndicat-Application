@@ -9,7 +9,7 @@ router.get('/verify_email/:token', verify_email)
 router.post('/forgotpassword', forget_password)
 router.post('/resetpassword/:token', resetpassword)
 router.get('/forgetPassword/:token', verify_email_rest)
-router.post('/logout', logout)
+router.get('/logout', logout)
 
 
 

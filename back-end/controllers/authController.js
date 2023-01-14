@@ -157,8 +157,11 @@ const resetpassword = async (req, res) => {
 //acces : private
 
 const logout = async (req, res) => {
-    ls.remove('token')
-    res.status(200).send("logout successfully")
+    let token = ls.get('token')
+    if (token) {
+        ls.remove('token')
+        res.status(200).send("logout successfully")
+    }
 }
 
 //function to reset password

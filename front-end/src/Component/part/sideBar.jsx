@@ -1,7 +1,22 @@
 import {Link} from 'react-router-dom';
+import axios from 'axios'
 export default function SideBar(){
 
-return(
+  const token_ = localStorage.getItem('token')
+
+    function logout(){
+      axios.get('http://localhost:5050/api/auth/logout')
+      .then((response)=>{
+        console.log(response)
+        if(token_){
+          localStorage.removeItem('token')
+          window.location = "/login"
+        }
+      })
+        .catch((err)=>{
+      })
+    }
+return(  
   <>
 <div className="sidebar">
   <div className="logo-details">
@@ -42,26 +57,7 @@ return(
       </a>
       <span className="tooltip">Paiment</span>
     </li>
-    {/* <li>
-      <a href="/#">
-        <i className='bx bx-receipt'></i>
-        <span className="links_name">Facture</span>
-      </a>
-      <span className="tooltip">Facture</span>
-    </li> */}
-    <li>
-      <a href="/#">
-        <i className='bx bx-cog'></i>
-        <span className="links_name">Setting</span>
-      </a>
-      <span className="tooltip">Setting</span>
-    </li>
-    <li className="profile">
-      <div className="profile-details">
-        <div className="name_job">
-          <div className="name">Prem Shahi</div>
-        </div>
-      </div>
+    <li className="profile" role="button" onClick={logout}>
       <i className='bx bx-log-out' id="log_out"></i>
     </li>
   </ul>
