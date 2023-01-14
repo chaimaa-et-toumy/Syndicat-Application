@@ -6,6 +6,7 @@ import Appartement from "./Component/appartement";
 import Login from "./Component/Login";
 import Forgotpassword from "./Component/Forgotpassword";
 import Resetpassword from "./Component/Resetpassword";
+import NotFound from "./Component/NotFound";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
