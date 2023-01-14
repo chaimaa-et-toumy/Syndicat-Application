@@ -18,13 +18,19 @@ services:
       - ./back-end/.env
     volumes:
       - ./back-end:/app
+      - /app/node_modules
+
   frontend:
     build: ./front-end
     ports:
       - "3000:3000"
     volumes:
-      - ./front-end/:/app/
+      - ./front-end/src:/app/src
+
+
 
 volumes:
   mongodb_data:
     driver: local
+
+

@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY ./package.json ./package.json
 
-RUN npm install
+COPY . ./
 
-COPY . .
+RUN npm install --force
 
 EXPOSE 3000
 

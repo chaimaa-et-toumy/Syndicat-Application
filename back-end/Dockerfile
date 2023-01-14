@@ -6,13 +6,8 @@ COPY ./package.json ./package.json
 
 RUN npm install
 
-COPY . .
+COPY . ./
 
-ENV NODE_ENV = "development"
-ENV port = 5050
-ENV MONGO_URL = "mongodb+srv://chaimaa:chaimaa@cluster0.0prajpx.mongodb.net/?retryWrites=true&w=majority"
-ENV JWT_SECRET = "Azerty123"
-
-EXPOSE 8080
+EXPOSE 5050
 
 CMD ["node", "server.js"]
