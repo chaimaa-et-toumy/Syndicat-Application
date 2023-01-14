@@ -29,6 +29,8 @@ export default function Login() {
         await axios.post('http://localhost:5050/api/auth/login', formData)
         .then((response) => {
             console.log(response.data)
+            localStorage.setItem("token",JSON.stringify(response.data))
+            window.location = "/"
         })
         .catch ((err) => {
             seterrors({...errors , email : err.response.data})

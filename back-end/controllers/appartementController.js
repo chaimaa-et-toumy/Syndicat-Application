@@ -43,7 +43,7 @@ const updateAppartement = async (req, res) => {
             }
         }
         const appartementExist = await appartement.findOne({ adresse: body.adresse })
-        if (appartementExist) {
+        if (appartementExist && appartementExist._id != id) {
             res.status(400).send("appartement already exist")
         }
         else {

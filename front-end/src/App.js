@@ -17,7 +17,7 @@ function App() {
           <Route path="/appartement" element={<Appartement />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
-          <Route path="/resetpassword" element={<Resetpassword />} />
+          <Route path="/resetpassword/:token" element={<Resetpassword />} />
         </Routes>
       </BrowserRouter>
     </>

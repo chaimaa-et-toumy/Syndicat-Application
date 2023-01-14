@@ -6,40 +6,42 @@ import Input from './part/Input'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Forgotpassword() {
-    const initialValue = {email : ""}
-    const [formData, setformData] = useState({...initialValue})
-    const [errors , setErrors] = useState({...initialValue})
+export default function Forgotpassword() {
+    const initialValues = {email:""}
+    const [formValues, setFormValues] = useState({...initialValues})
+    const [errors, setErrors] = useState({...initialValues})
 
-    const handleChange = (e) => {
-        setformData({...formData , [e.target.name] : e.target.value})
-        setErrors({...formData, [e.target.name] : ""})
-    }
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-        if(!formData.email){
-            setErrors({...formData, email : "email is required"})
-        }
-        await axios.post("http://localhost:5050/api/auth/forgotpassword", formData)
-            .then((res)=>{
-                console.log(res.data)
-                toast.info(res.data.msg ,{
-                    position: "top-right",
-                    autoClose: 6000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                    });
-            })
-            .catch((err)=>{
-                setErrors({...errors , email : err.res.data})
-            })
-        
+  const handleChange = (e) => {
+    setFormValues({...formValues, [e.target.name] : e.target.value})
+    setErrors({...errors, [e.target.name]: ""})
+  }
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+
+    if(!formValues.email){
+        setErrors({...errors, email: "Email is required!"})
     }
+      await axios.post('http://localhost:5050/api/auth/forgotpassword',formValues)
+      .then((response)=>{
+        toast.info(response.data.msg ,{
+          position: "top-right",
+          autoClose: 6000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      })
+       .catch((err)=>{
+        console.log(err)
+        setErrors({...errors, email: err.response.data})
+      }) 
+}
+    
 
 return (
 <section className="">
@@ -61,7 +63,7 @@ return (
                             className="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg w-full p-2.5 "
                             placeholder="name@company.com" 
                             id="email"
-                            value = {formData.email}
+                            value = {formValues.email}
                             onChange = {handleChange} 
                         />
                         <div className='text-red-600 text-sm'>{errors.email}</div> 
@@ -84,5 +86,3 @@ return (
 </section>
 )
 }
-
-export default Forgotpassword

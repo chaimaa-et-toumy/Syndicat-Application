@@ -142,25 +142,16 @@ const resetpassword = async (req, res) => {
     if (!password) {
         res.status(400).send("password is required")
     }
-    else {
-        const syndique_ = await syndique.findOne({ eToken: token })
-        if (syndique_) {
-            if (syndique_.isReset === true) {
-                syndique_.password = await bycrpt.hash(password, salt)
-                res.status(200).send("password is reset")
-                await syndique_.save()
-            }
-            else {
-                res.status(400).send("password is not reset")
-            }
-        }
-        else {
-            res.status(404).send("user not found")
-        }
+    const syndique_ = await syndique.findOne({ etoken: token })
+    if (syndique_ && syndique_.isReset === true) {
+        syndique_.password = await bycrpt.hash(password, salt)
+        res.status(200).send("password is reset")
+        await syndique_.save()
     }
-
+    else {
+        res.status(400).send("password is not reset")
+    }
 }
-
 //method : get
 //url : api/auth/logout
 //acces : private
@@ -176,8 +167,9 @@ const verify_email_rest = async (req, res) => {
         let token = req.params.token
         const syndique_ = await syndique.findOne({ etoken: token })
         if (syndique_) {
-            syndique_.isReset = true,
-                await syndique_.save()
+            syndique_.isReset = true
+            await syndique_.save()
+            res.redirect(`http://localhost:3000/resetpassword/:${token}`)
         }
         else {
             res.send("password is not verified")
@@ -195,6 +187,7 @@ const verify_email = async (req, res) => {
             syndique_.isVerifed = true
             await syndique_.save()
             console.log("email is verified")
+            res.redirect('http://localhost:3000/login')
         }
         else {
             console.log("email is not verified")
