@@ -6,7 +6,9 @@ import Appartement from "./pages/appartement";
 import Login from "./pages/Login";
 import Forgotpassword from "./pages/Forgotpassword";
 import Resetpassword from "./pages/Resetpassword";
+import Payment from "./pages/payment";
 import NotFound from "./pages/NotFound";
+import AddPayment from "./pages/addPayment";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/addpayment" element={<AddPayment />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

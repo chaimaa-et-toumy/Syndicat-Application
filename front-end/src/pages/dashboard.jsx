@@ -9,6 +9,7 @@ export default function Dashboard(){
   const [client, setClient] = useState(0);
   const [apartmentRented, setApartmentRented] = useState(0);
   const [apartmentNotRented, setApartmentNotRented] = useState(0);
+  const [payment, setPayment] = useState(0);
 
     axios.get('http://localhost:5050/api/client/countClient')
       .then(res => {
@@ -29,6 +30,14 @@ export default function Dashboard(){
     axios.get('http://localhost:5050/api/appartement/countAppartementNotRented')
       .then(res => {
         setApartmentNotRented(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+    axios.get('http://localhost:5050/api/paiment/countPaiment')
+      .then(res => {
+        setPayment(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -95,7 +104,7 @@ return(
                 </div>
                 <div className="flex flex-col flex-grow ml-4">
                   <div className="text-sm text-gray-500">payment</div>
-                  <div className="font-bold text-lg">$ 32k</div>
+                  <div className="font-bold text-lg">{payment}</div>
                 </div>
               </div>
             </div>

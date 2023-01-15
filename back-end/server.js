@@ -20,7 +20,7 @@ app.use(cors())
 app.use('/api/auth', router)
 app.use('/api/client', routerClient)
 app.use('/api/appartement', routerAppartement)
-app.use('/api/paiment', [requiredLogin, routerPaiment])
+app.use('/api/paiment', routerPaiment)
 app.use(errRoute)
 
 

@@ -51,11 +51,13 @@ return(
     </Link>
     </li>
      <li>
+      <Link to="/payment">
       <a href="/#">
         <i className='bx bx-money'></i>
         <span className="links_name">Paiment</span>
       </a>
       <span className="tooltip">Paiment</span>
+      </Link>
     </li>
     <li className="profile" role="button" onClick={logout}>
       <i className='bx bx-log-out' id="log_out"></i>
