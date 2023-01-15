@@ -17,6 +17,10 @@ const addAppartement = async (req, res) => {
                 res.status(400).send("appartement already exist")
             }
             else {
+                if (body.isRented === false) {
+                    // remove client from body
+                    delete body.client
+                }
                 const newAppartement = new appartement({ ...body })
                 await newAppartement.save()
                 res.status(201).send("appartement created successfully")

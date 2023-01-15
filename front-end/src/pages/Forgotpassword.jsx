@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import {Link} from 'react-router-dom'
-import Input from './part/Input'
+import Input from '../Component/Input'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
