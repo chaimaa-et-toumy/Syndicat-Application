@@ -74,11 +74,11 @@ export default function EditClient(props) {
                 <form onSubmit={handleSubmit}>
                   <div className="relative z-0 w-full mb-6 group">
                     <input type="text" id="floating_email" className="
-                                bg-transparent border-0 border-b-2 border-gray-300 
-                                block py-2.5 px-0 w-full text-sm text-gray-900
-                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
-                                appearance-none 
-                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                      bg-transparent border-0 border-b-2 border-gray-300 
+                      block py-2.5 px-0 w-full text-sm text-gray-900
+                      focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                      appearance-none 
+                      dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
                       name="fullname" value={display.fullname} onChange={handleChange} />  
                     <label htmlFor="floating_email"
                       className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full
@@ -87,11 +87,11 @@ export default function EditClient(props) {
                   <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                       <input type="tel" id="floating_phone" className="
-                                bg-transparent border-0 border-b-2 border-gray-300 
-                                block py-2.5 px-0 w-full text-sm text-gray-900
-                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
-                                appearance-none 
-                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                        bg-transparent border-0 border-b-2 border-gray-300 
+                        block py-2.5 px-0 w-full text-sm text-gray-900
+                        focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                        appearance-none 
+                        dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
                         value={display.tel} onChange={handleChange} name="tel" />
                       <label htmlFor="floating_phone"
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
@@ -99,11 +99,11 @@ export default function EditClient(props) {
                     </div>
                     <div className="relative z-0 w-full mb-6 group">
                       <input type="text" id="floating_company" className="
-                                bg-transparent border-0 border-b-2 border-gray-300 
-                                block py-2.5 px-0 w-full text-sm text-gray-900
-                                focus:outline-none focus:ring-0 focus:border-blue-600 peer
-                                appearance-none 
-                                dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
+                        bg-transparent border-0 border-b-2 border-gray-300 
+                        block py-2.5 px-0 w-full text-sm text-gray-900
+                        focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                        appearance-none 
+                        dark:text-black dark:border-gray-600 dark:focus:border-blue-500 " placeholder=""
                         value={display.cin} onChange={handleChange} name="cin" />
                       <label htmlFor="floating_company"
                         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">CIN</label>
@@ -111,9 +111,6 @@ export default function EditClient(props) {
 
                     </div>
                   </div>
-
-
-
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                     <button
                       className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
