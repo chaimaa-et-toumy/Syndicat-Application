@@ -1,5 +1,5 @@
 import React , {useEffect, useState} from "react";
-import SideBar from "../Component/sideBar"
+import SideBar from "../../Component/sideBar";
 import axios from "axios";
 import AddClient from "./addClient";
 import EditClient from "./EditClient";

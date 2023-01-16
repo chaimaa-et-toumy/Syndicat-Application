@@ -1,8 +1,8 @@
 import React from 'react'
-import SideBar from '../Component/sideBar'
+import SideBar from '../../Component/sideBar'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
-import Input from '../Component/Input'
+import Input from '../../Component/Input'
 
 export default function AddPayment({setRefresh}) {
   const [appartement, setAppartement] = useState([])
@@ -85,30 +85,6 @@ return (
                 <p className="my-4 text-slate-500 text-lg leading-relaxed">
 
                 <form onSubmit={handleSubmit}>
-                  <div>
-                    <div className="relative z-0 w-full mb-6 group">
-                      <select id="appartement"
-                        className="mt-3 text-black border border-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:border-blue-500"
-                        onChange={handleChange} name="appartement" value={Payment.appartement}>
-                        <option value="" selected disabled>Selected Appartement</option>
-                        {
-                        appartement.map((appartement)=>{
-                        return(
-                        appartement.isRented === true ?
-                        <option value={appartement._id}>{appartement.adresse}</option>
-                        : <option value="" hidden></option>
-                        )
-                        })
-                        }
-                      </select>
-
-                      <div className="text-red-600 text-xs">{errors.appartement}</div>
-                    </div>
-                    <label htmlFor="floating_email"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                      Prix
-                    </label>
-                  </div>
                   <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                       <Input 
@@ -142,6 +118,26 @@ return (
                         date
                       </label>
                       <div className="text-red-600 text-xs">{errors.date_paiment}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="relative z-0 w-full mb-6 group">
+                      <select id="appartement"
+                        className="mt-3 text-black border border-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:border-blue-500"
+                        onChange={handleChange} name="appartement" value={Payment.appartement}>
+                        <option value="" selected disabled>Selected Appartement</option>
+                        {
+                        appartement.map((appartement)=>{
+                        return(
+                        appartement.isRented === true ?
+                        <option value={appartement._id}>{appartement.adresse}</option>
+                        : <option value="" hidden></option>
+                        )
+                        })
+                        }
+                      </select>
+
+                      <div className="text-red-600 text-xs">{errors.appartement}</div>
                     </div>
                   </div>
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios'
-import Input from '../Component/Input'
+import Input from '../../Component/Input'
 export default function EditPayment(props) {
     const [showModal3, setShowModal3] = useState(false);
     const [payment , setPayment] = useState({prix : "" , date_paiment : "" , appartement : "" })

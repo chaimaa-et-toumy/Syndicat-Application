@@ -1,5 +1,5 @@
 import React from 'react'
-import SideBar from '../Component/sideBar'
+import SideBar from '../../Component/sideBar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import AddPayment from './addPayment'

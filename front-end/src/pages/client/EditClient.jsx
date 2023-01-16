@@ -1,4 +1,4 @@
-import Input from "../Component/Input";
+import Input from "../../Component/Input";
 import axios from "axios";
 import React , {useState} from "react";
 

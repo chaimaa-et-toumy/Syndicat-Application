@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import {Link} from 'react-router-dom'
-import Input from '../Component/Input'
+import Input from '../../Component/Input'
 import axios from 'axios'
 
 export default function Login() {

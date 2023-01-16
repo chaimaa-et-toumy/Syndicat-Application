@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from "../Component/Input";
+import Input from "../../Component/Input";
 import axios from 'axios';
 import { useState  } from 'react';
 export default function AddClient({setRefresh}) {
