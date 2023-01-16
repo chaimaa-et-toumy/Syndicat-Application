@@ -10,6 +10,7 @@ import Payment from "./pages/payment";
 import NotFound from "./pages/NotFound";
 import AddPayment from "./pages/addPayment";
 import AddClient from "./pages/addClient";
+import EditClient from "./pages/EditClient";
 import ProtectRoute from "./Utils/ProtectRoute";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/addpayment" element={<AddPayment />} />
             <Route path="/addClient" element={<AddClient />} />
+            <Route path="/editClient/:id" element={<EditClient />} />
 
           </Route>
 
