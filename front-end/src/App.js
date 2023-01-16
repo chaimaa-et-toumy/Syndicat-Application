@@ -9,6 +9,7 @@ import Resetpassword from "./pages/auth/Resetpassword";
 import Payment from "./pages/payment/payment";
 import NotFound from "./pages/NotFound";
 import ProtectRoute from "./Utils/ProtectRoute";
+import ExportPdf from "./pages/payment/exportPdf";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/client" element={<Client />} />
             <Route path="/appartement" element={<Appartement />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/exportPdf/:id" element={<ExportPdf />} />
           </Route>
 
         </Routes>
