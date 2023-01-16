@@ -9,21 +9,26 @@ import Resetpassword from "./pages/Resetpassword";
 import Payment from "./pages/payment";
 import NotFound from "./pages/NotFound";
 import AddPayment from "./pages/addPayment";
+import ProtectRoute from "./Utils/ProtectRoute";
 
 function App() {
   return (
     <>
       <BrowserRouter >
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/client" element={<Client />} />
-          <Route path="/appartement" element={<Appartement />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/addpayment" element={<AddPayment />} />
           <Route path="/*" element={<NotFound />} />
+
+          <Route element={<ProtectRoute />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/client" element={<Client />} />
+            <Route path="/appartement" element={<Appartement />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/addpayment" element={<AddPayment />} />
+          </Route>
+
         </Routes>
       </BrowserRouter>
     </>
