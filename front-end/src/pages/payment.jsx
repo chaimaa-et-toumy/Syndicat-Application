@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import SideBar from '../Component/sideBar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import AddPayment from './addPayment'
 
 export default function Payment() {
   
   const[Payment, setPayment] = useState([])
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     axios.get('http://localhost:5050/api/paiment/getAllPaiment')
@@ -17,7 +19,7 @@ export default function Payment() {
     .catch(err => {
       console.log(err)
     })
-  }, [])
+  }, [refresh])
 
   return (
   <>
@@ -26,12 +28,9 @@ export default function Payment() {
       <div className="flex justify-between">
         <div className="text">Payment</div>
         <div className="p-4 mr-3">
-          <Link to="/addpayment">
-          <button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light"
-            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-            Add
+          <button>
+            <AddPayment setRefresh={setRefresh} />
           </button>
-          </Link>
         </div>
       </div>
 
@@ -94,6 +93,7 @@ export default function Payment() {
                   </td>
                     <td className="px-6 py-4">
                       <div className="flex justify-end gap-4">
+                        <Link to={`/EditPayment/${item._id}`}>
                         <button type="button">
                           <button>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
@@ -103,6 +103,7 @@ export default function Payment() {
                             </svg>
                           </button>
                         </button>
+                        </Link>
                       </div>
                     </td>
                   </tr>

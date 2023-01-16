@@ -9,7 +9,7 @@ import Resetpassword from "./pages/Resetpassword";
 import Payment from "./pages/payment";
 import NotFound from "./pages/NotFound";
 import AddPayment from "./pages/addPayment";
-import UpdatePayment from "./pages/updatePayment";
+import AddClient from "./pages/addClient";
 import ProtectRoute from "./Utils/ProtectRoute";
 
 function App() {
@@ -28,7 +28,8 @@ function App() {
             <Route path="/appartement" element={<Appartement />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/addpayment" element={<AddPayment />} />
-            <Route path="/EditPayment/:id" element={<UpdatePayment />} />
+            <Route path="/addClient" element={<AddClient />} />
+
           </Route>
 
         </Routes>
